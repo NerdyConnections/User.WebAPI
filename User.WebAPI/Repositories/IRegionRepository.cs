@@ -11,6 +11,9 @@ namespace User.WebAPI.Repositories
     {
         Task<IEnumerable<Region>> GetAllAsync();
         Task<Region> GetAsync(int id);
+        Task<Region> AddAsync(Region region);
+
+        Task<Region> DeleteAsync(int id);
 
     }
 }

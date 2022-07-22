@@ -17,6 +17,27 @@ namespace User.WebAPI.Repositories
         {
             _db = db;
         }
+
+        public async Task<Region> AddAsync(Region region)
+        {
+            await _db.Regions.AddAsync(region);
+            await _db.SaveChangesAsync();
+            return region;
+        }
+
+        public async Task<Region> DeleteAsync(int id)
+        {
+            var region = await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            if (region==null)
+            {
+                return null;
+
+            }
+            _db.Regions.Remove(region);
+            await _db.SaveChangesAsync();
+            return region;
+        }
+
         public async Task<IEnumerable<Region>> GetAllAsync()
         {
             return await _db.Regions.ToListAsync();

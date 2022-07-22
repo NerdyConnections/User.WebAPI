@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using User.Domain.Models;
 
 namespace User.Domain.DTO
 {
-    public  class RegionDTO
+    public  class AddRegionDTO
     {
-        public int Id { get; set; }
-
         public string Code { get; set; }
         public string Name { get; set; }
         public double Area { get; set; }
@@ -19,7 +16,6 @@ namespace User.Domain.DTO
 
         public long Population { get; set; }
 
-        //Navigation Property
-       
+        
     }
 }

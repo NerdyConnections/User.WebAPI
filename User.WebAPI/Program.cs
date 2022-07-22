@@ -3,14 +3,15 @@ using User.WebAPI.Data;
 using User.WebAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -25,11 +26,19 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseSwagger();
+    //app.UseSwaggerUI(c =>
+    //{
+    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    //});
+    app.UseSwaggerUI();
+    //  app.UseExceptionHandler("/Error");
 }
-app.UseStaticFiles();
 
-app.UseRouting();
+app.UseHttpsRedirection();
+//app.UseStaticFiles();
+
+//app.UseRouting();
 
 app.UseAuthorization();
 

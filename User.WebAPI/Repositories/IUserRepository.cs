@@ -13,5 +13,11 @@ namespace User.WebAPI.Repositories
 
         Task<UserModel> GetAsync(int Id);
 
+
+        Task<UserModel> AddAsync(UserModel user);
+
+        Task<UserModel> DeleteAsync(int id);
+
+
     }
 }

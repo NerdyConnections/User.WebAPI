@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using User.Domain.Models.Common;
 
 namespace User.Domain.Models
 {
-    public  class Department
+    public  class Department:BaseDTOEntity
     {
 
-        public int Id { get; set; }
+     
 
         public string DepartmentName { get; set; }
     }

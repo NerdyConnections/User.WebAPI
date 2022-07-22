@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using User.Domain.Models;
+using User.Domain.Models.Common;
 
 namespace User.Domain.DTO
 {
-    public  class UserModelDTO
+    public  class UserModelDTO:BaseDTOEntity
     {
-        public int Id { get; set; }
-
+       
+     
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
@@ -19,8 +20,6 @@ namespace User.Domain.DTO
 
         public int DepartmentId { get; set; }
 
-        //Navigation Property
 
-        public Department Department { get; set; }
     }
 }

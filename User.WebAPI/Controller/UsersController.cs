@@ -63,7 +63,7 @@ namespace User.WebAPI.Controllers
                 LastModifiedDate = addUserModelDTO.LastModifiedDate
 
             };
-            //   var region = _mapper.Map<Region>(addRegionDTO);
+          
 
 
             //pass details to repository
@@ -99,14 +99,14 @@ namespace User.WebAPI.Controllers
             //get region from db
 
             UserModel user = await _userRepository.DeleteAsync(Id);
-
+            //not found
             if (user == null)
             {
                 return NotFound();
             }
 
-            //not found
-            //
+            
+            
             var userDTO = new UserModelDTO
             {
 
@@ -126,5 +126,55 @@ namespace User.WebAPI.Controllers
 
             //return ok
         }
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateUserAsync([FromRoute] int id, [FromBody] UpdateUserDTO updateUserDTO)
+        {
+            //convert dto to domain
+          
+            var userModel = new UserModel()
+            {
+                FirstName = updateUserDTO.FirstName,
+                LastName = updateUserDTO.LastName,
+                Age = updateUserDTO.Age,
+                Phone = updateUserDTO.Phone,
+                DepartmentId = updateUserDTO.DepartmentId,
+                
+                LastModifiedBy = updateUserDTO.LastModifiedBy,
+                LastModifiedDate = updateUserDTO.LastModifiedDate
+
+            };
+          
+            //update user using repository
+            userModel = await _userRepository.UpdateAsync(id,userModel);
+
+            //if null then not found
+            if (userModel == null)
+            {
+                return NotFound();
+
+            }
+
+            //convert domain back to dto
+            var userDTO = new UpdateUserDTO
+            {
+                Id = userModel.Id,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                Age = userModel.Age,
+                Phone = userModel.Phone,
+                DepartmentId = userModel.DepartmentId,
+                
+                LastModifiedBy = userModel.LastModifiedBy,
+                LastModifiedDate = userModel.LastModifiedDate
+
+            };
+
+            //return ok response
+            return Ok(userDTO);
+
+        }
+
+
     }
 }

@@ -44,5 +44,28 @@ namespace User.WebAPI.Repositories
             await _db.SaveChangesAsync();
             return user;
         }
+
+        public async Task<UserModel> UpdateAsync(int id, UserModel userModel)
+        {
+            var userfromDb = await _db.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (userfromDb == null)
+            {
+                return null;
+
+            }
+            userfromDb.FirstName = userModel.FirstName;
+            userfromDb.LastName = userModel.LastName;
+            userfromDb.Age = userModel.Age;
+            userfromDb.Phone = userModel.Phone;
+            userfromDb.DepartmentId = userModel.DepartmentId;
+
+            userfromDb.LastModifiedBy = userModel.LastModifiedBy;
+            userfromDb.LastModifiedDate = userModel.LastModifiedDate;
+            await _db.SaveChangesAsync();
+            return userfromDb;
+
+
+
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace User.WebAPI.Repositories
 
         Task<UserModel> DeleteAsync(int id);
 
+        Task<UserModel> UpdateAsync(int id, UserModel userModel);
+
 
     }
 }

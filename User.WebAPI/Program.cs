@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
               ));
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);//inject automapper, application looks for all profiles and maps data
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

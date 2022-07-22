@@ -9,7 +9,7 @@ namespace User.WebAPI.Repositories
 {
     public interface  IRegionRepository
     {
-        IEnumerable<Region> GetAll();
+        Task<IEnumerable<Region>> GetAllAsync();
 
     }
 }

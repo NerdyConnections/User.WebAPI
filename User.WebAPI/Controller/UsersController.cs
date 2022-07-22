@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using User.Domain.DTO;
 using User.WebAPI.Repositories;
 
 namespace User.WebAPI.Controllers
@@ -8,10 +10,12 @@ namespace User.WebAPI.Controllers
     public class UsersController : Controller
     {
         private readonly IUserRepository _userRepository;
-        public UsersController(IUserRepository userRepository)
+        private IMapper _mapper;
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-            
+            _mapper = mapper;
+
         }
 
 
@@ -20,8 +24,10 @@ namespace User.WebAPI.Controllers
         public IActionResult GetAllUserss()
         {
             var users = _userRepository.GetAll();
+            var usersDTO = _mapper.Map<List<UserModelDTO>>(users);
 
-            return Ok(users);
+            return Ok(usersDTO);
+            
         }
     }
 }

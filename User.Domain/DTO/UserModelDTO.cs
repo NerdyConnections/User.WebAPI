@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using User.Domain.DTO.Common;
 using User.Domain.Models;
 using User.Domain.Models.Common;
 
@@ -20,6 +21,6 @@ namespace User.Domain.DTO
 
         public int DepartmentId { get; set; }
 
-
+        public DepartmentDTO Department { get; set; }
     }
 }

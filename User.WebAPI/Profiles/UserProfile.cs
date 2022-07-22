@@ -9,6 +9,8 @@ namespace User.WebAPI.Profiles
         public UserProfile()
         {
             CreateMap<UserModel, UserModelDTO>().ReverseMap();
+
+            CreateMap<Department, DepartmentDTO>().ReverseMap();
         }
     }
 }

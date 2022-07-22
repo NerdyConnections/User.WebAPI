@@ -7,7 +7,7 @@ using User.Domain.Models.Common;
 
 namespace User.Domain.Models
 {
-    public  class UserModel : BaseDTOEntity
+    public  class UserModel : BaseEntity
     {
 
        

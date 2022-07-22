@@ -5,13 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using User.Domain.DTO.Common;
 
-namespace User.Domain.Models
+namespace User.Domain.DTO
 {
-    public  class Department: BaseDTOEntity
+    public class DepartmentDTO
     {
-
-     
-
         public string DepartmentName { get; set; }
     }
 }

@@ -19,12 +19,14 @@ namespace User.WebAPI.Repositories
         }
         public async Task<IEnumerable<UserModel>> GetAllAsync()
         {
-            return await _db.Users.ToListAsync();
+            return await _db.Users.Include(x=> x.Department).ToListAsync();
         }
 
         public async Task<UserModel> GetAsync(int Id)
         {
-            return await _db.Users.FirstOrDefaultAsync(x=> x.Id == Id);
+           return await _db.Users.Include(x=>x.Department).FirstOrDefaultAsync(x=> x.Id == Id);
+
+           
         }
         public async Task<UserModel> AddAsync(UserModel user)
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using User.WebAPI.Repositories;
 
 namespace User.WebAPI.Controllers
 {
@@ -6,9 +7,21 @@ namespace User.WebAPI.Controllers
     [Route("Users")]
     public class UsersController : Controller
     {
-        public IActionResult Index()
+        private readonly IUserRepository _userRepository;
+        public UsersController(IUserRepository userRepository)
         {
-            return View();
+            _userRepository = userRepository;
+            
+        }
+
+
+
+        [HttpGet]
+        public IActionResult GetAllUserss()
+        {
+            var users = _userRepository.GetAll();
+
+            return Ok(users);
         }
     }
 }

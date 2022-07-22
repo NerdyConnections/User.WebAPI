@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using User.WebAPI.Data;
 using User.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace User.WebAPI.Repositories
 {
@@ -16,9 +17,14 @@ namespace User.WebAPI.Repositories
         {
             _db = db;
         }
-        public IEnumerable<UserModel> GetAll()
+        public async Task<IEnumerable<UserModel>> GetAllAsync()
         {
-            return _db.Users.ToList();
+            return await _db.Users.ToListAsync();
+        }
+
+        public async Task<UserModel> GetAsync(int Id)
+        {
+            return await _db.Users.FirstOrDefaultAsync(x=> x.Id == Id);
         }
     }
 }

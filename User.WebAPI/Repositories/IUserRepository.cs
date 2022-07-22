@@ -9,7 +9,9 @@ namespace User.WebAPI.Repositories
 {
     public interface  IUserRepository
     {
-        IEnumerable<UserModel> GetAll();
+        Task<IEnumerable<UserModel>> GetAllAsync();
+
+        Task<UserModel> GetAsync(int Id);
 
     }
 }

@@ -10,6 +10,7 @@ namespace User.WebAPI.Repositories
     public interface  IRegionRepository
     {
         Task<IEnumerable<Region>> GetAllAsync();
+        Task<Region> GetAsync(int id);
 
     }
 }

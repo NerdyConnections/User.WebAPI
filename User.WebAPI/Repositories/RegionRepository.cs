@@ -21,5 +21,11 @@ namespace User.WebAPI.Repositories
         {
             return await _db.Regions.ToListAsync();
         }
+
+        public async Task<Region> GetAsync(int id)
+        {
+           return  await _db.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            
+        }
     }
 }

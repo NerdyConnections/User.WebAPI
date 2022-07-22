@@ -21,9 +21,9 @@ namespace User.WebAPI.Controllers
 
 
         [HttpGet]
-        public IActionResult GetAllUserss()
+        public async Task<IActionResult> GetAllUsers()
         {
-            var users = _userRepository.GetAll();
+            var users = await _userRepository.GetAllAsync();
             var usersDTO = _mapper.Map<List<UserModelDTO>>(users);
 
             return Ok(usersDTO);

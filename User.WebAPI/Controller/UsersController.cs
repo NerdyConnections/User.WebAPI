@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using User.Domain.DTO;
 using User.Domain.Models;
@@ -8,6 +9,7 @@ namespace User.WebAPI.Controllers
 {
     [ApiController]
     [Route("Users")]
+   
     public class UsersController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -46,6 +48,7 @@ namespace User.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddUserAsync([FromBody] AddUserModelDTO addUserModelDTO)
 
         {
@@ -97,6 +100,7 @@ namespace User.WebAPI.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteUserAsync(int Id)
         {
             //get user from db
@@ -132,10 +136,15 @@ namespace User.WebAPI.Controllers
         }
         [HttpPut]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateUserAsync([FromRoute] int id, [FromBody] UpdateUserDTO updateUserDTO)
         {
+
+            //validate UpdateUserDTO using fluent validation look at the validators folder
+            //invalid request will not come in at all.
+
             //convert dto to domain
-          
+
             var userModel = new UserModel()
             {
                 FirstName = updateUserDTO.FirstName,

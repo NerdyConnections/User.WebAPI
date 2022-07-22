@@ -1,4 +1,8 @@
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using User.WebAPI.Data;
 using User.WebAPI.Repositories;
 
@@ -7,6 +11,10 @@ builder.Services.AddControllers();
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//inject fluent validations
+builder.Services.
+    AddFluentValidation(options=>options.RegisterValidatorsFromAssemblyContaining<Program>());
 //Enable CORS
 builder.Services.AddCors(c =>
 {
@@ -25,24 +33,39 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
               ));
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddAutoMapper(typeof(Program).Assembly);//inject automapper, application looks for all profiles and maps data
+builder.Services.AddAutoMapper(typeof(Program).Assembly);//inject automapper, application looks for all profiles and maps dtos to domain objects and vice versa
+builder.Services.AddSingleton<IClientRepository, StaticUserRepository>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+   .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+   {
+       ValidateIssuer = true,
+       ValidateAudience = true,
+       ValidateLifetime = true,
+       ValidateIssuerSigningKey = true,
+       ValidIssuer = builder.Configuration["Jwt:Issuer"],
+       ValidAudience = builder.Configuration["Jwt:Audience"],
+       IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
+   });
+
+
 var app = builder.Build();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    //app.UseSwaggerUI(c =>
-    //{
-    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    //});
+   
     app.UseSwaggerUI();
     //  app.UseExceptionHandler("/Error");
 }
 
 app.UseHttpsRedirection();
 //app.UseStaticFiles();
-
+app.UseAuthentication();
 //app.UseRouting();
 
 app.UseAuthorization();

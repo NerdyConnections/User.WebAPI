@@ -49,6 +49,13 @@ namespace User.WebAPI.Controllers
         public async Task<IActionResult> AddUserAsync([FromBody] AddUserModelDTO addUserModelDTO)
 
         {
+            //Validate Request
+
+            if (!ValidAddUserAsync(addUserModelDTO))
+            {
+                return BadRequest();   
+            }
+
             //convert dto model to domain model
             var userModel = new UserModel()
             {
@@ -171,7 +178,39 @@ namespace User.WebAPI.Controllers
             return Ok(userDTO);
 
         }
+        #region
+        private bool ValidAddUserAsync(AddUserModelDTO addUserModelDTO)
+        {
+            if (addUserModelDTO == null)
+            {
 
+
+                ModelState.AddModelError(nameof(addUserModelDTO), $"User Data is missing.");
+                return false;
+
+            }
+            if (String.IsNullOrWhiteSpace(addUserModelDTO.FirstName))
+            {
+
+                ModelState.AddModelError(nameof(addUserModelDTO.FirstName), $"{nameof(addUserModelDTO.FirstName)} cannot be null or empty or white space.");
+            }
+            if (String.IsNullOrWhiteSpace(addUserModelDTO.LastName))
+            {
+
+                ModelState.AddModelError(nameof(addUserModelDTO.LastName), $"{nameof(addUserModelDTO.FirstName)} cannot be null or empty or white space.");
+            }
+            if (addUserModelDTO.Age <= 0  )
+            {
+
+                ModelState.AddModelError(nameof(addUserModelDTO.Age), $"{nameof(addUserModelDTO.Age)} cannot be less than or equal zero");
+            }
+            if (ModelState.ErrorCount> 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
 
     }
 }

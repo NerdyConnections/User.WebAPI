@@ -53,7 +53,7 @@ namespace User.WebAPI.Controllers
 
             if (!ValidAddUserAsync(addUserModelDTO))
             {
-                return BadRequest();   
+                return BadRequest(ModelState);   
             }
 
             //convert dto model to domain model

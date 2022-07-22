@@ -19,8 +19,6 @@ namespace User.WebAPI.Controllers
 
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> GetAllUsersAsync()
         {
@@ -30,6 +28,7 @@ namespace User.WebAPI.Controllers
             return Ok(usersDTO);
             
         }
+
         [HttpGet]
         [Route("{id:int}")]
         [ActionName("GetUserAsync")]
@@ -45,11 +44,12 @@ namespace User.WebAPI.Controllers
             return Ok(userDTO);
 
         }
+
         [HttpPost]
-        public async Task<IActionResult> AddUserAsync(AddUserModelDTO addUserModelDTO)
+        public async Task<IActionResult> AddUserAsync([FromBody] AddUserModelDTO addUserModelDTO)
 
         {
-            //dto model to domain model
+            //convert dto model to domain model
             var userModel = new UserModel()
             {
                 FirstName = addUserModelDTO.FirstName,
@@ -64,12 +64,8 @@ namespace User.WebAPI.Controllers
 
             };
           
-
-
             //pass details to repository
             userModel = await _userRepository.AddAsync(userModel);
-
-           
 
             //convert back to dto
            
@@ -88,7 +84,7 @@ namespace User.WebAPI.Controllers
 
             };
             //http code 201, client knows save is successful
-            //acdtion return when object is found
+            //action return when object is found
 
             return CreatedAtAction(nameof(GetUserAsync), new { id = userDTO.Id }, userDTO);
         }
@@ -96,7 +92,7 @@ namespace User.WebAPI.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteUserAsync(int Id)
         {
-            //get region from db
+            //get user from db
 
             UserModel user = await _userRepository.DeleteAsync(Id);
             //not found
@@ -106,7 +102,7 @@ namespace User.WebAPI.Controllers
             }
 
             
-            
+            //convert domain to dto
             var userDTO = new UserModelDTO
             {
 
@@ -121,10 +117,11 @@ namespace User.WebAPI.Controllers
                 LastModifiedBy = user.LastModifiedBy,
                 LastModifiedDate = user.LastModifiedDate
             };
+            //return 200 and the user deleted
             return Ok(userDTO);
 
 
-            //return ok
+            
         }
         [HttpPut]
         [Route("{id}")]

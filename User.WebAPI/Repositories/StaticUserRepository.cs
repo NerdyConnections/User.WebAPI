@@ -21,15 +21,11 @@ namespace User.WebAPI.Repositories
             }
         };
 
-        public async Task<bool> AuthenticateAsync(string username, string password)
+        public async Task<Client> AuthenticateAsync(string username, string password)
         {
            var client= Clients.Find(x => x.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase) && x.Password == password);
 
-            if (client != null)
-            {
-                return true;
-            }
-            return false
+            return client;
         }
     }
 }

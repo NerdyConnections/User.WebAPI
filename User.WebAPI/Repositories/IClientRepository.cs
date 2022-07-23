@@ -1,9 +1,11 @@
-﻿namespace User.WebAPI.Repositories
+﻿using User.Domain.Models;
+
+namespace User.WebAPI.Repositories
 {
     public interface  IClientRepository
     {
 
-       Task<bool> AuthenticateAsync(string username, string password);
+       Task<Client> AuthenticateAsync(string username, string password);
 
     }
 }

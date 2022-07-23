@@ -31,11 +31,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
               options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection")
 
               ));
-builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);//inject automapper, application looks for all profiles and maps dtos to domain objects and vice versa
 builder.Services.AddSingleton<IClientRepository, StaticUserRepository>();
-
+builder.Services.AddScoped<ITokenHandler, User.WebAPI.Repositories.TokenHandler>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
    {

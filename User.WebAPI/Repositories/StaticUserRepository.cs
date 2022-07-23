@@ -4,7 +4,7 @@ namespace User.WebAPI.Repositories
 {
     public class StaticUserRepository : IClientRepository
     {
-
+        //harding coding valid users for demo but easily change to db with depending injection with a different repository
         private List<Client> Clients = new List<Client>()
         {
             new Client()

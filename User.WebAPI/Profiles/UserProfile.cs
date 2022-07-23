@@ -8,6 +8,8 @@ namespace User.WebAPI.Profiles
     {
         public UserProfile()
         {
+
+            //mapping dtos with domain object and vice versa
             CreateMap<UserModel, UserModelDTO>().ReverseMap();
 
             CreateMap<Department, DepartmentDTO>().ReverseMap();
